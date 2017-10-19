@@ -24,32 +24,35 @@ import java.util.TreeSet;
 
 public class Main {
   private static final Long INIT_DELAY = 1000L;
-  private static final Long REPEAT_TIME = 60 * 1000L;
+  private static final Long REPEAT_TIME = 60 * 60 * 1000L;
 
   public static void main(String[] args) {
     IMessenger messenger = new ShakeAlertBot();
     IParser<HtmlPage> groupParser = new GroupPageParser();
     IParser<HtmlPage> ssdParser = new SSDPageParser();
+    Set<Shake> allShakes = new TreeSet<>(Comparator.comparing(Shake::getDateTime).reversed());
 
     new Timer().schedule(new TimerTask() {
       @Override
       public void run() {
-        Set<Shake> allShakes =
+        Set<Shake> currentShakes =
             new TreeSet<>(Comparator.comparing(Shake::getDateTime).reversed());
         try (WebClient webClient = new WebClient()) {
           HtmlPage avachaPage = webClient.getPage(getInstance().getProperty(AVACHA_GROUP));
           webClient.waitForBackgroundJavaScript(5000);
-          allShakes.addAll(groupParser.parse(avachaPage));
+          currentShakes.addAll(groupParser.parse(avachaPage));
 
           HtmlPage northenPage = webClient.getPage(getInstance().getProperty(NORTHEN_GROUP));
           webClient.waitForBackgroundJavaScript(5000);
-          allShakes.addAll(groupParser.parse(northenPage));
+          currentShakes.addAll(groupParser.parse(northenPage));
 
           HtmlPage ssdPage = webClient.getPage(getInstance().getProperty(SSD_URL));
           webClient.waitForBackgroundJavaScript(5000);
-          allShakes.addAll(ssdParser.parse(ssdPage));
+          currentShakes.addAll(ssdParser.parse(ssdPage));
 
-          allShakes.stream()
+          currentShakes.removeAll(allShakes);
+          allShakes.addAll(currentShakes);
+          currentShakes.stream()
               .filter(shake -> shake.getMagnitude() > 0.f)
               .filter(shake -> shake.getDateTime().isAfter(DateTime.now().minusHours(24)))
               .forEach(shake -> messenger.send(new Message<>(null, shake)));
@@ -60,4 +63,3 @@ public class Main {
     }, INIT_DELAY, REPEAT_TIME);
   }
 }
-
