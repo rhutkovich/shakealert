@@ -1,26 +1,26 @@
-package me.shakealert.logic.messaging.impl;
+package com.hutkovich.shakealert.logic.messaging.impl;
 
-import static me.shakealert.util.Constant.TELEGRAM_BOT_TOKEN;
-import static me.shakealert.util.Constant.TELEGRAM_BOT_USERNAME;
-import static me.shakealert.util.DateUtil.printDate;
-import static me.shakealert.util.PropertiesHelper.getInstance;
-
-import me.shakealert.logic.messaging.api.IMessenger;
-import me.shakealert.logic.messaging.common.Message;
-import me.shakealert.model.Shake;
+import com.hutkovich.shakealert.logic.messaging.api.IMessenger;
+import com.hutkovich.shakealert.logic.messaging.common.Message;
+import com.hutkovich.shakealert.model.Shake;
 import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.TelegramBotsApi;
-import org.telegram.telegrambots.api.methods.send.SendLocation;
-import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.objects.Chat;
-import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
-import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.api.methods.send.SendLocation;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.hutkovich.shakealert.util.Constant.TELEGRAM_BOT_TOKEN;
+import static com.hutkovich.shakealert.util.Constant.TELEGRAM_BOT_USERNAME;
+import static com.hutkovich.shakealert.util.DateUtil.printDate;
+import static com.hutkovich.shakealert.util.PropertiesHelper.getInstance;
 
 public class ShakeAlertBot extends TelegramLongPollingBot implements IMessenger {
   static {

@@ -1,4 +1,4 @@
-package me.shakealert.util;
+package com.hutkovich.shakealert.util;
 
 import java.io.IOException;
 import java.io.InputStream;

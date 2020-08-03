@@ -1,4 +1,4 @@
-package me.shakealert.model;
+package com.hutkovich.shakealert.model;
 
 import org.joda.time.DateTime;
 

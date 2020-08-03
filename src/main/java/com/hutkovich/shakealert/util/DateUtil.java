@@ -1,4 +1,4 @@
-package me.shakealert.util;
+package com.hutkovich.shakealert.util;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -19,6 +19,7 @@ public class DateUtil {
               DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").getParser(),
               DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SS").getParser(),
               DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS").getParser(),
+              DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSSS").getParser(),
           }).toFormatter();
 
   public static DateTime parseDate(String dateString) {

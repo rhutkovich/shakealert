@@ -1,4 +1,4 @@
-package me.shakealert.logic.messaging;
+package com.hutkovich.shakealert.logic.messaging;
 
 public class MessengerException extends Exception {
   public MessengerException() {

@@ -1,4 +1,4 @@
-package me.shakealert.logic.messaging.common;
+package com.hutkovich.shakealert.logic.messaging.common;
 
 public class Message<H, B> {
   private H header;

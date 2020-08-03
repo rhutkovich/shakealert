@@ -1,4 +1,4 @@
-package me.shakealert.util;
+package com.hutkovich.shakealert.util;
 
 public class NumbersUtil {
   private NumbersUtil() {

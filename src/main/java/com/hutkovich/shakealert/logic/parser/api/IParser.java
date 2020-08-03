@@ -1,6 +1,6 @@
-package me.shakealert.logic.parser.api;
+package com.hutkovich.shakealert.logic.parser.api;
 
-import me.shakealert.model.Shake;
+import com.hutkovich.shakealert.model.Shake;
 
 import java.util.Collection;
 

@@ -1,26 +1,20 @@
-package me.shakealert.main;
-
-import static me.shakealert.util.Constant.AVACHA_GROUP;
-import static me.shakealert.util.Constant.NORTHEN_GROUP;
-import static me.shakealert.util.Constant.SSD_URL;
-import static me.shakealert.util.PropertiesHelper.getInstance;
+package com.hutkovich.shakealert.main;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import me.shakealert.logic.messaging.api.IMessenger;
-import me.shakealert.logic.messaging.common.Message;
-import me.shakealert.logic.messaging.impl.ShakeAlertBot;
-import me.shakealert.logic.parser.api.IParser;
-import me.shakealert.logic.parser.impl.GroupPageParser;
-import me.shakealert.logic.parser.impl.SSDPageParser;
-import me.shakealert.model.Shake;
+import com.hutkovich.shakealert.logic.messaging.api.IMessenger;
+import com.hutkovich.shakealert.logic.messaging.common.Message;
+import com.hutkovich.shakealert.logic.messaging.impl.ShakeAlertBot;
+import com.hutkovich.shakealert.logic.parser.api.IParser;
+import com.hutkovich.shakealert.logic.parser.impl.GroupPageParser;
+import com.hutkovich.shakealert.logic.parser.impl.SSDPageParser;
+import com.hutkovich.shakealert.model.Shake;
 import org.joda.time.DateTime;
 
-import java.util.Comparator;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.TreeSet;
+import java.util.*;
+
+import static com.hutkovich.shakealert.util.Constant.*;
+import static com.hutkovich.shakealert.util.PropertiesHelper.getInstance;
 
 public class Main {
   private static final Long INIT_DELAY = 1000L;
@@ -37,14 +31,16 @@ public class Main {
       public void run() {
         Set<Shake> currentShakes =
             new TreeSet<>(Comparator.comparing(Shake::getDateTime).reversed());
-        try (WebClient webClient = new WebClient()) {
-          HtmlPage avachaPage = webClient.getPage(getInstance().getProperty(AVACHA_GROUP));
+        WebClient webClient = null;
+        try {
+          webClient = new WebClient();
+          /*HtmlPage avachaPage = webClient.getPage(getInstance().getProperty(AVACHA_GROUP));
           webClient.waitForBackgroundJavaScript(5000);
           currentShakes.addAll(groupParser.parse(avachaPage));
 
           HtmlPage northenPage = webClient.getPage(getInstance().getProperty(NORTHEN_GROUP));
           webClient.waitForBackgroundJavaScript(5000);
-          currentShakes.addAll(groupParser.parse(northenPage));
+          currentShakes.addAll(groupParser.parse(northenPage));*/
 
           HtmlPage ssdPage = webClient.getPage(getInstance().getProperty(SSD_URL));
           webClient.waitForBackgroundJavaScript(5000);
@@ -58,6 +54,10 @@ public class Main {
               .forEach(shake -> messenger.send(new Message<>(null, shake)));
         } catch (Exception e) {
           e.printStackTrace();
+        } finally {
+          if (webClient != null) {
+            webClient.closeAllWindows();
+          }
         }
       }
     }, INIT_DELAY, REPEAT_TIME);

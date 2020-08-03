@@ -1,17 +1,17 @@
-package me.shakealert.logic.parser.impl;
-
-import static me.shakealert.util.NumbersUtil.parseFloat;
+package com.hutkovich.shakealert.logic.parser.impl;
 
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.DomNodeList;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import me.shakealert.logic.parser.api.IParser;
-import me.shakealert.model.Shake;
-import me.shakealert.util.DateUtil;
+import com.hutkovich.shakealert.logic.parser.api.IParser;
+import com.hutkovich.shakealert.model.Shake;
+import com.hutkovich.shakealert.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.hutkovich.shakealert.util.NumbersUtil.parseFloat;
 
 public class GroupPageParser implements IParser<HtmlPage> {
   private static final String UNWANTED_SYMBOLS = "[^\\d\\-.:]+";
